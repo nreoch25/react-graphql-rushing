@@ -27,12 +27,17 @@ const Header = () => {
           style={{ cursor: "pointer", fontSize: "20px" }}
           className="font-weight-bold text-white"
         >
-          NextJS GraphQL Hooks Auth
+          NFL Rushing
         </NavLink>
       </Link>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ml-auto" navbar>
+          <NavItem>
+            <Link href="/players">
+              <NavLink style={{ cursor: "pointer" }}>Players</NavLink>
+            </Link>
+          </NavItem>
           <NavItem>
             <Link href="/protected">
               <NavLink style={{ cursor: "pointer" }}>Protected</NavLink>
