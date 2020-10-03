@@ -34,3 +34,50 @@ export const getLocalStorage = (item) => {
 export const setLocalStorage = (item, data) => {
   localStorage.setItem(item, data);
 };
+
+const convertArrayOfObjectsToCSV = (args) => {
+  var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+  data = args.data || null;
+  if (data == null || !data.length) {
+    return null;
+  }
+
+  columnDelimiter = args.columnDelimiter || ",";
+  lineDelimiter = args.lineDelimiter || "\n";
+
+  keys = Object.keys(data[0]);
+
+  result = "";
+  result += keys.join(columnDelimiter);
+  result += lineDelimiter;
+
+  data.forEach(function (item) {
+    ctr = 0;
+    keys.forEach(function (key) {
+      if (ctr > 0) result += columnDelimiter;
+
+      result += item[key];
+      ctr++;
+    });
+    result += lineDelimiter;
+  });
+
+  return result;
+};
+
+export const downloadCSV = (items) => {
+  const csv = convertArrayOfObjectsToCSV({
+    data: items,
+  });
+
+  const random = Math.floor(Math.random() * 1000000 + 1);
+  const title = `rushing-${random}`;
+
+  let link = document.createElement("a");
+  link.id = title;
+  link.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(csv));
+  link.setAttribute("download", `${title}.csv`);
+  document.body.appendChild(link);
+  document.querySelector(`#${title}`).click();
+};

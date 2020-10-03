@@ -5,7 +5,7 @@ import PLAYERS_QUERY from "../../graphql/players.query";
 import PlayersTable from "./PlayersTable";
 import FilterForm from "./FilterForm";
 import FilterButtons from "./FilterButtons";
-import { compareNumber, getLocalStorage, setLocalStorage } from "../../utils";
+import { compareNumber, getLocalStorage, setLocalStorage, downloadCSV } from "../../utils";
 
 const Players = ({ me }) => {
   const { data, loading, error } = useQuery(PLAYERS_QUERY);
@@ -58,6 +58,11 @@ const Players = ({ me }) => {
     setLocalStorage(nameLowerCase, JSON.stringify(filteredPlayers));
   };
 
+  const handleDownloadCSV = () => {
+    const csvPlayers = filtered.players || data.players;
+    downloadCSV(csvPlayers);
+  };
+
   const players = filtered.players || data.players;
 
   return (
@@ -65,7 +70,11 @@ const Players = ({ me }) => {
       <Row style={{ paddingTop: "30px" }}>
         <Col>
           <FilterForm filterByName={filterByName} />
-          <FilterButtons sortingPlayers={sortingPlayers} resetPlayers={resetPlayers} />
+          <FilterButtons
+            sortingPlayers={sortingPlayers}
+            resetPlayers={resetPlayers}
+            handleDownloadCSV={handleDownloadCSV}
+          />
           <PlayersTable players={players} />
         </Col>
       </Row>
