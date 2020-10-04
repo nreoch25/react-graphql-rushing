@@ -11,7 +11,6 @@ const endpoint = process.browser ? config.clientEndpoint : config.serverEndpoint
 const wsEndpoint = config.wsEndpoint;
 
 export default function createApolloClient(initialState, headers) {
-  console.log("HEADERS", headers);
   const authLink = new ApolloLink((operation, forward) => {
     const token = process.browser ? localStorage.getItem("token") : null;
     operation.setContext({

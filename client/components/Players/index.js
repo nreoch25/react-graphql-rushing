@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Row, Col, Table } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import { useQuery } from "@apollo/react-hooks";
 import PLAYERS_QUERY from "../../graphql/players.query";
 import PlayersTable from "./PlayersTable";

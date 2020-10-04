@@ -7,12 +7,9 @@ const Query = {
   }),
   me: async (parent, args, { User, req }) => {
     if (!req.userId) {
-      console.log("RETURN NULL FOR USER");
       return null;
     }
-    console.log("ME QUERY", req.userId);
     const { _id, username, email } = await User.findById(req.userId);
-    console.log("CURRENT USER", { _id, username, email });
     return {
       _id,
       username,

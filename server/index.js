@@ -41,7 +41,6 @@ app.use(cookieParser());
 // use cookie parser to populate current user
 app.use((req, res, next) => {
   const { token } = req.cookies;
-  console.log("TOKEN COOKIE", token);
   if (token) {
     const { _id } = jwt.verify(token, process.env.JWT_SECRET);
     // put the userId onto the req for future requests to access
@@ -76,8 +75,6 @@ const corsEndpoint =
     ? `http://${process.env.CLIENT_URI}`
     : `https://${process.env.CLIENT_URI}`;
 
-console.log("CORSENDPOINT", corsEndpoint);
-
 graphQLServer.applyMiddleware({
   app,
   path: "/graphql",
@@ -88,8 +85,6 @@ const subscriptionEndpoint =
   process.env.NODE_ENV === "development"
     ? `ws://${process.env.SERVER_URI}${graphQLServer.graphqlPath}`
     : `wss://${process.env.SERVER_URI}${graphQLServer.graphqlPath}`;
-
-console.log("SUBSCRIPTION ENDPOINT", subscriptionEndpoint);
 
 app.get(
   "/playground",

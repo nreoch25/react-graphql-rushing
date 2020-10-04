@@ -64,7 +64,6 @@ const Mutation = {
   requestReset: async (root, { email }, { User, res }) => {
     // check if there is a user with that email
     email = email.toLowerCase();
-    console.log(email);
     const user = await User.findOne({ email });
     if (!user) {
       throw new Error(`No such user found for email ${email}`);
