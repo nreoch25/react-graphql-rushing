@@ -78,11 +78,6 @@ const Players = ({ me }) => {
           <PlayersTable players={players} />
         </Col>
       </Row>
-      <Row style={{ paddingTop: "30px" }}>
-        <Col>
-          <h1>Players table</h1>
-        </Col>
-      </Row>
     </Fragment>
   );
 };
