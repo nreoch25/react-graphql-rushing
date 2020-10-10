@@ -47,7 +47,8 @@
       "<rootDir>/__tests__/setup/setupEnzyme.js"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/setup/"
+      "<rootDir>/__tests__/setup/",
+      "<rootDir>/__tests__/mock/players.js"
     ],
     "transform": {
       "^.+\\.js$": "babel-jest"
