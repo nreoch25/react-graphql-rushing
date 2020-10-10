@@ -14,7 +14,7 @@ const PlayersButtons = ({
   return (
     <ButtonGroup className="mb-3">
       <Button outline color="primary" onClick={resetPlayers}>
-        All Players
+        Unsorted Players
       </Button>
       <Button outline color="primary" onClick={sortingPlayers("yards")}>
         Rushing Yards Leaders

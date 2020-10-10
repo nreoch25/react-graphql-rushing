@@ -33,6 +33,7 @@
     "ws": "7.1.2"
   },
   "devDependencies": {
+    "@apollo/react-testing": "3.1.4",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "enzyme": "^3.8.0",

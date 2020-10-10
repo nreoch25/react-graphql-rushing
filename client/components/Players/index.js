@@ -9,6 +9,7 @@ import { compareNumber, getLocalStorage, setLocalStorage, downloadCSV } from "..
 
 const Players = ({ me }) => {
   const { data, loading, error } = useQuery(PLAYERS_QUERY);
+  // Optimization could be to use useReducer here
   const [filtered, setFiltered] = useState({
     players: null,
     filterMode: false,
@@ -17,19 +18,22 @@ const Players = ({ me }) => {
   });
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p id="loading">Loading...</p>;
   }
   if (error) {
     return <p>Error: {JSON.stringify(error.message)}</p>;
   }
   const reverseOrder = () => {
-    const playersArray = [...filtered.players];
+    const { players, descending } = filtered;
+    const playersArray = [...players];
     const reversedArray = playersArray.reverse();
-    setFiltered({ ...filtered, players: reversedArray, descending: !filtered.descending });
+    setFiltered({ ...filtered, players: reversedArray, descending: !descending });
   };
 
   const sortFiltered = (type) => {
-    const playersArray = [...filtered.players];
+    const { players } = filtered;
+    const playersArray = [...players];
+    console.log("PLAYERS", JSON.stringify(playersArray));
     const sortedPlayers = playersArray.sort(compareNumber(type));
     setFiltered({ ...filtered, players: sortedPlayers });
   };
@@ -41,18 +45,23 @@ const Players = ({ me }) => {
 
     if (getLocalStorage(type) !== null) {
       console.log(`Getting ${type} from Local Storage`);
-      return setFiltered({ players: JSON.parse(getLocalStorage(type)), filterMode: true });
+      return setFiltered({
+        ...filtered,
+        players: JSON.parse(getLocalStorage(type)),
+        filterMode: true,
+      });
     }
 
     console.log(`Sorting by ${type} and storing in Local Storage`);
-    const playersArray = [...data.players];
+    const { players } = data;
+    const playersArray = [...players];
     const sortedPlayers = playersArray.sort(compareNumber(type));
-    setFiltered({ players: sortedPlayers, filterMode: true });
+    setFiltered({ ...filtered, players: sortedPlayers, filterMode: true });
     setLocalStorage(type, JSON.stringify(sortedPlayers));
   };
 
   const resetPlayers = () => {
-    setFiltered({ players: null, searchMode: false });
+    setFiltered({ ...filtered, players: null, searchMode: false, filterMode: false });
   };
 
   const filterByName = (name) => {
@@ -64,7 +73,8 @@ const Players = ({ me }) => {
     }
 
     console.log(`Filtering for ${name} and storing in Local Storage`);
-    const playersArray = [...data.players];
+    const { players } = data;
+    const playersArray = [...players];
 
     const filteredPlayers = playersArray.filter((player) => {
       const playerLowerCase = player.name.toLowerCase();
@@ -81,6 +91,7 @@ const Players = ({ me }) => {
   };
 
   const players = filtered.players || data.players;
+  const { searchMode, filterMode, descending } = filtered;
 
   return (
     <Fragment>
@@ -92,8 +103,8 @@ const Players = ({ me }) => {
             resetPlayers={resetPlayers}
             handleDownloadCSV={handleDownloadCSV}
             reverseOrder={reverseOrder}
-            filterMode={filtered.searchMode || filtered.filterMode}
-            descending={filtered.descending}
+            filterMode={searchMode || filterMode}
+            descending={descending}
           />
           <PlayersTable players={players} />
         </Col>
