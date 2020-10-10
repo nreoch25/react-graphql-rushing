@@ -43,7 +43,7 @@ const FilterForm = ({ filterByName }) => {
       <Collapse isOpen={collapse}>
         <CardBody>
           <Form onSubmit={handleSubmit}>
-            <FormGroup>
+            <FormGroup> 
               <Input
                 type="name"
                 name="name"
