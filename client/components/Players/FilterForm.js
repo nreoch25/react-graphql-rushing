@@ -26,7 +26,6 @@ const FilterForm = ({ filterByName }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log("NAME LENGTH", name.length);
     if (name.length < 3) {
       return setError("Please type 3 characters of the players name");
     }
@@ -43,7 +42,7 @@ const FilterForm = ({ filterByName }) => {
       <Collapse isOpen={collapse}>
         <CardBody>
           <Form onSubmit={handleSubmit}>
-            <FormGroup> 
+            <FormGroup>
               <Input
                 type="name"
                 name="name"
@@ -52,7 +51,7 @@ const FilterForm = ({ filterByName }) => {
                 onChange={handleChange}
               />
             </FormGroup>
-            <Button type="submit" color="primary" block>
+            <Button type="submit" color="primary" block id="filter">
               Submit
             </Button>
           </Form>
